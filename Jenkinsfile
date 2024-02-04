@@ -74,7 +74,7 @@ pipeline{
             steps{
                 script{
                     withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'k8s', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
-                       sh 'kubectl apply -f deployment.yaml' #where deployment + svc configs are in a single file.
+                       sh 'kubectl apply -f deployment.yaml' # where deployment + svc configs are in a single file.
                   }
                 }
             }
