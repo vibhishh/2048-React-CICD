@@ -65,6 +65,17 @@ pipeline{
                 sh "trivy image mradulsingh25/2048:latest > trivy.txt"
             }
         }
+        post {
+          always {
+             emailext attachLog: true,
+                subject: "'${currentBuild.result}'",
+                body: "Project: ${env.JOB_NAME}<br/>" +
+                      "Build Number: ${env.BUILD_NUMBER}<br/>" +
+                      "URL: ${env.BUILD_URL}<br/>",
+                to: 'mradulsingh1725@gmail.com',
+                attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
+            }
+        }
         stage('Deploy to Container'){
             steps{
                 sh 'docker run -d --name 2048 -p 3000:3000 mradulsingh25/2048:latest'
